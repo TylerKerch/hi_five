@@ -83,15 +83,15 @@ class ProfileScreenState extends State<ProfileScreen> {
                 }
               },
               itemBuilder: (context) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                   value: PopupMenu.item1,
                   child: Text("About")
               ),
-              PopupMenuItem(
+              const PopupMenuItem(
                   value: PopupMenu.item2,
                   child: Text("Settings")
               ),
-                PopupMenuItem(
+                const PopupMenuItem(
                     value: PopupMenu.item3,
                     child: Text("Administrator Settings")
                 )
@@ -106,63 +106,61 @@ class ProfileScreenState extends State<ProfileScreen> {
         ),
 
 
-        body: Container(
-          child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Center(
-              child: Column(
-                  children: [
-                    SizedBox(height: 30),
-                    Image.asset('images/alan_turing_new.png'),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Text(
-                        "${usersName}",
-                        style: TextStyle(fontSize: 40, color: Colors.black, fontWeight: FontWeight.bold),
+        body: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Center(
+            child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  Image.asset('assets/images/alan_turing_new.png'),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Text(
+                      "${usersName}",
+                      style: const TextStyle(fontSize: 40, color: Colors.black, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  const SizedBox(height:35),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/images/hifive_logo.png'),
+                        iconSize: 100,
+                          onPressed: ()  {
+                          final player = AudioPlayer();
+                          player.play(AssetSource('audio/highfivesound.mp3'));
+                          }
+                          //=> AudioPlayer().setSource(AssetSource('audio/clapnoise.mp3'))
                       ),
-                    ),
-                    SizedBox(height:35),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: Image.asset('images/hifive_logo.png'),
-                          iconSize: 100,
-                            onPressed: ()  {
-                            final player = AudioPlayer();
-                            player.play(AssetSource('audio/highfivesound.mp3'));
-                            }
-                            //=> AudioPlayer().setSource(AssetSource('audio/clapnoise.mp3'))
+                      Container(
+                        child: Text(
+                          "${streak}",
+                          style: TextStyle(fontSize: 50, color: Colors.black),
                         ),
-                        Container(
-                          child: Text(
-                            "${streak}",
-                            style: TextStyle(fontSize: 50, color: Colors.black),
-                          ),
-                        ),
-
-                      ]
-                    ),
-                    //SizedBox(height: 20),
-                    TextButton(onPressed: null,
-                      child: Text(
-                        "Log out",
-                        style: TextStyle(fontSize: 20, color: Color(0xFF9ed4ff)),
                       ),
+
+                    ]
+                  ),
+                  //SizedBox(height: 20),
+                  const TextButton(onPressed: null,
+                    child: Text(
+                      "Log out",
+                      style: TextStyle(fontSize: 20, color: Color(0xFF9ed4ff)),
                     ),
-                  ],
+                  ),
+                ],
 
 
-              ),
+            ),
         ),
-          ),
-      ),
+        ),
 
       floatingActionButton: FloatingActionButton(
         heroTag: 'img',
         backgroundColor: Colors.black,
         //color: Color(0xFF7fb1ff),
-        child: Icon(
+        child: const Icon(
             Icons.qr_code,
           ),
 
@@ -198,7 +196,7 @@ class ProfileQR extends StatelessWidget {
               ),
               child: Hero(
                 tag: 'img',
-                child: Image.asset('images/Rickrolling_QR_code.png'),
+                child: Image.asset('assets/images/Rickrolling_QR_code.png'),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -219,7 +217,7 @@ class ProfileQR extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
           heroTag: 'img',
           backgroundColor: Colors.black,
-          child: Icon(Icons.close),
+          child: const Icon(Icons.close),
 
           onPressed: () {
             Navigator.pop(context);
@@ -232,28 +230,28 @@ class ProfileQR extends StatelessWidget {
 }
 
 class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      body: Container(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 400),
-              Text('Role: ${usersType}'),
-              Text('Version: ${version}'),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          children: [
+            SizedBox(height: 400),
+            Text('Role: ${usersType}'),
+            Text('Version: ${version}'),
+          ],
         ),
       ),
 
       floatingActionButton: FloatingActionButton(
         heroTag: 'img',
         backgroundColor: Colors.black,
-        child: Icon(Icons.close),
+        child: const Icon(Icons.close),
 
         onPressed: () {
           Navigator.pop(context);
@@ -265,6 +263,8 @@ class AboutPage extends StatelessWidget {
 }
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +274,7 @@ class SettingsPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         heroTag: 'img',
         backgroundColor: Colors.black,
-        child: Icon(Icons.close),
+        child: const Icon(Icons.close),
 
         onPressed: () {
           Navigator.pop(context);
@@ -287,6 +287,8 @@ class SettingsPage extends StatelessWidget {
 }
 
 class AdminPage extends StatelessWidget {
+  const AdminPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -306,16 +308,14 @@ class AdminPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
               children: [
-                Icon(
+                const Icon(
                     Icons.lock_person_outlined,
                   size: 50,
 
                 ),
-                Container(
-                  child: Text(
-                    "Wallet",
-                    style: TextStyle(fontSize: 50, color: Colors.black, fontWeight: FontWeight.bold),
-                  ),
+                Text(
+                  "Wallet",
+                  style: TextStyle(fontSize: 50, color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -323,7 +323,7 @@ class AdminPage extends StatelessWidget {
             SizedBox(height: 50),
             Container(
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 "Balance",
                 style: TextStyle(fontSize: 20, color: Colors.grey),
               ),
@@ -336,11 +336,9 @@ class AdminPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 50),
-            Container(
-              child: Text(
-                "Payment methods",
-                style: TextStyle(fontSize: 15, color: Colors.grey),
-              ),
+            Text(
+              "Payment methods",
+              style: TextStyle(fontSize: 15, color: Colors.grey),
             ),
 
             TextFormField(
@@ -362,11 +360,9 @@ class AdminPage extends StatelessWidget {
 
             SizedBox(height: 75),
 
-            Container(
-              child: Text(
-                "Reward control",
-                style: TextStyle(fontSize: 15, color: Colors.grey),
-              ),
+            Text(
+              "Reward control",
+              style: TextStyle(fontSize: 15, color: Colors.grey),
             ),
 
             TextFormField(
@@ -395,7 +391,7 @@ class AdminPage extends StatelessWidget {
                 decoration: InputDecoration(
                     labelText: "Reward amount (Current: \$${reward})",
                     hintText: "Change value: ",
-                    icon: Icon(Icons.celebration)
+                    icon: const Icon(Icons.celebration)
                 )
             ),
 

@@ -70,7 +70,12 @@ flutter:
      - assets/images/testpost.jpg
      - assets/images/testpost2.jpg
      - assets/images/testpost3.jpg
-     - images/
+     - assets/images/alan_turing_new.png
+     - assets/images/alan_turing.jpg
+     - assets/images/hifive_background.jpg
+     - assets/images/hifive_logo.png
+     - assets/images/hifivewhite.jpg
+     - assets/images/Rickrolling_QR_code.png
      - audio/
 
   # An image asset can refer to one or more resolution-specific "variants", see
