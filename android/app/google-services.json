@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "444326457927",
+    "project_id": "hifive-37189",
+    "storage_bucket": "hifive-37189.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444326457927:android:1971e955d21fc5b0cf7762",
+        "android_client_info": {
+          "package_name": "com.example.hi_five"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444326457927-57qbrjsi76lupbk7k2ci41v0tn0ncg6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpV1g_8oL-_f6Y00uh2DyBpbMmpvpylz0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444326457927-57qbrjsi76lupbk7k2ci41v0tn0ncg6t.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444326457927-j7hmv80tvpa5g6ae8iei9uajudc7c2gh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hiFive"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
