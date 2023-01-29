@@ -12,7 +12,6 @@ class GroupScreenState extends State<GroupScreen> {
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
 

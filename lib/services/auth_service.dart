@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
-import 'package:hi_five/models/User.dart';
+import 'package:hi_five/models/Emp.dart';
 
 class AuthService {
   void signInWithEmail(String email, String password) {
@@ -8,22 +8,38 @@ class AuthService {
         .signInWithEmailAndPassword(email: email, password: password);
   }
 
-  static Future<List<String>> getAllUsernames() async {
+  static Future<List<String>> getAllEmails() async {
     QuerySnapshot snapshot =
     await FirebaseFirestore.instance.collection('users').get();
     List<DocumentSnapshot> docs = snapshot.docs;
-    List<String> usernames = [];
+    List<String> emails = [];
 
     for (DocumentSnapshot doc in docs) {
-      usernames.add(doc.get('username'));
+      emails.add(doc.get('email'));
     }
+    return emails;
+  }
 
-    return usernames;
+
+  static Future<List<String>> getAllOtherNames(String email) async {
+    QuerySnapshot snapshot =
+    await FirebaseFirestore.instance.collection('users').get();
+    List<DocumentSnapshot> docs = snapshot.docs;
+    List<String> names = [];
+
+    for (DocumentSnapshot doc in docs) {
+      if(doc.get('email') != email){
+        names.add(doc.get('name'));
+      }
+    }
+    return names;
   }
 
   Future<bool> signUpWithEmail(
-      String name, String username, String email, String password) async {
+      String name, String email, String password) async {
     try {
+      print(email);
+      print(password);
       auth.UserCredential userCredential = await auth.FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -33,14 +49,15 @@ class AuthService {
     }
   }
 
-  static Future<void> createUser(User user) async {
+  static Future<void> createUser(Emp emp) async {
+    print(emp.toJson());
     await FirebaseFirestore.instance
         .collection('users')
         .doc(auth.FirebaseAuth.instance.currentUser!.uid)
-        .set(user.toJson());
+        .set(emp.toJson());
   }
 
-  Future<void> signOut() async {
+  static Future<void> signOut() async {
     await auth.FirebaseAuth.instance.signOut();
   }
 }

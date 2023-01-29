@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../services/auth_service.dart';
+
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -19,7 +21,14 @@ class ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
         appBar: AppBar(title: Text("HiFive")),
 
-        body: Container()
+        body: Container(
+          child: ElevatedButton(
+            child: Icon(Icons.add),
+            onPressed: () async {
+              AuthService.signOut();
+            }
+          )
+        )
     );
   }
 }

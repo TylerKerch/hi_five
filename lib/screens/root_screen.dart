@@ -1,15 +1,21 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hi_five/screens/profile_screen.dart';
 import 'package:hi_five/screens/group_screen.dart';
 import 'package:hi_five/screens/feed_screen.dart';
-import 'package:hi_five/screens/login_screen.dart';
+import 'package:hi_five/screens/signup_screen.dart';
+import 'package:hi_five/screens/take_picture_screen.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart' as qr;
 
 import 'package:provider/provider.dart';
 
 import '../providers/AuthProvider.dart';
+import 'globals.dart' as globals;
+import 'login_screen.dart';
 
 class RootScreen extends StatefulWidget {
-  const RootScreen({Key? key}) : super(key: key);
+  const RootScreen({Key? key, required this.camera}) : super(key: key);
+  final CameraDescription camera;
 
   @override
   _RootScreenState createState() => _RootScreenState();
@@ -24,66 +30,57 @@ class _RootScreenState extends State<RootScreen> {
   void initState() {
     super.initState();
     _pages = [
-    const GroupScreen(),
-    const FeedScreen(),
-    const ProfileScreen()];
-    // _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
-    //   setState(() {
-    //     _currentUser = account;
-    //   });
-    //   if (_currentUser != null) {
-    //     _handleGetContact(_currentUser!);
-    //   }
-    // });
-    // _googleSignIn.signInSilently();
+      const GroupScreen(),
+      FeedScreen(camera: widget.camera),
+      const ProfileScreen()
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
-
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    if(!authProvider.loggedIn){
-        //return LoginScreen();
+    if (!authProvider.loggedIn) {
+      return const LoginScreen();
     }
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: _pages,
-        onPageChanged: (index) {
-          setState(() {
-            _index = index;
-          });
-        },
-      ),
+        body: PageView(
+          controller: _pageController,
+          children: _pages,
+          onPageChanged: (index) {
+            setState(() {
+              _index = index;
+            });
+          },
+        ),
         bottomNavigationBar: ClipRect(
             child: BottomNavigationBar(
-                  selectedItemColor: Colors.blue,
-                  unselectedItemColor: Colors.black54,
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  showSelectedLabels: true,
-                  items: const [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.workspaces_outlined),
-                      label: 'Group',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.collections_outlined),
-                      label: 'Feed',
-                    ),
-                    BottomNavigationBarItem(
-                        icon: Icon(Icons.face),
-                        label: 'Profile'),
-                  ],
-                  currentIndex: _index,
-                  onTap: (index) {
-                    setState(() {
-                      _index = index;
-                      _pageController.animateToPage(_index,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeIn);
-
-                    });
-                  },
-                )));
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.black54,
+          backgroundColor: Colors.white.withOpacity(0.9),
+          showSelectedLabels: true,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.workspaces_outlined),
+              label: 'Group',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.collections_outlined),
+              label: 'Feed',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.face), label: 'Profile'),
+          ],
+          currentIndex: _index,
+          onTap: (index) {
+            setState(() {
+              _index = index;
+              if(index!=1){
+                globals.qrController?.pauseCamera();
+              }
+              _pageController.animateToPage(_index,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeIn);
+            });
+          },
+        )));
   }
 }
