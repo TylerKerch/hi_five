@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+class Employee {
+  String name = "";
+  int streakCount = 0;
+  String position = "";
+
+  Employee(String n, int sCount, String p) {
+    name = n;
+    streakCount = sCount;
+    position = p;
+  }
+}
+
 class GroupScreen extends StatefulWidget {
   const GroupScreen({Key? key}) : super(key: key);
 
@@ -16,48 +28,27 @@ class GroupScreenState extends State<GroupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // 14 entries
-    List<String> entries = <String>[
-      'Caleb',
-      'Aaron',
-      'Erik',
-      'Tyler',
-      'Nathan',
-      'Sean',
-      'Koki',
-      'Emily',
-      'Keisha',
-      'Cameron',
-      'Alexander',
-      'Austin',
-      'Kevin',
-      'Andrew'
+    // 14 entries, Employee list and positions
+    List<Employee> entries = <Employee>[
+      Employee('Caleb', 5, 'CEO'),
+      Employee('Aaron', 3, 'Manager'),
+      Employee('Erik', 5, 'Product Manager'),
+      Employee('Tyler', 21, 'Business analyst'),
+      Employee('Nathan', 41, 'Business Analyst'),
+      Employee('Sean', 21, 'Sales Engineer'),
+      Employee('Koki', 31, 'Software Engineer'),
+      Employee('Emily', 5, 'Software Engineer'),
+      Employee('Keisha', 10, 'Intern'),
+      Employee('Cameron', 3, 'Data Scientist'),
+      Employee('Alexander', 0, 'UX Designer'),
+      Employee('Austin', 12, 'UI Designer'),
+      Employee('Kevin', 5, 'Front-End Designer'),
+      Employee('Andrew', 54, 'Mobile Developer')
     ];
-    List<String> positions = <String>[
-      'Chief marketing officer',
-      'Manager',
-      'Product Manager',
-      'Business analyst',
-      'Business analyst',
-      'Sales representative',
-      'Software Engineer',
-      'Software Engineer',
-      'Applications Engineer',
-      'Digital Marketing Manager',
-      'Information Architect',
-      'UX Designer',
-      'UI Designer',
-      'Front-End Designer'
-    ];
+    bool fiveStreak(int sCount) {
+      return (sCount % 5 == 0) && (sCount != 0);
+    }
 
-    Random random = new Random();
-    var streaks = List<int>.generate(
-      entries.length,
-      (index) {
-        int num = random.nextInt(70);
-        return num;
-      },
-    );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -67,20 +58,16 @@ class GroupScreenState extends State<GroupScreen> {
         ),
       ),
       body: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: entries.length,
         itemBuilder: (name, index) {
-          // return ListTile(
-          //   leading: const Icon(Icons.account_circle_sharp),
-          //   title: Text(entries[index]),
-          //   trailing: Text("${streaks[index]} days"),
-          // );
           return Container(
-              padding: EdgeInsets.all(2),
-              decoration: new BoxDecoration(boxShadow: [
-                new BoxShadow(color: Colors.black26, blurRadius: 10)
+              padding: const EdgeInsets.all(2),
+              decoration: const BoxDecoration(boxShadow: [
+                BoxShadow(color: Colors.black26, blurRadius: 10)
               ]),
               child: Card(
-                  color: Color(0xFFf5f7f9),
+                  color: const Color(0xFFf5f7f9),
                   child: SizedBox(
                       width: 300,
                       height: 80,
@@ -88,16 +75,30 @@ class GroupScreenState extends State<GroupScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           ListTile(
-                            leading: Icon(Icons.account_circle_sharp,
-                                size: 35, color: Color(0xFFb1ddf1)),
+                            leading: Container(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
+                              child: const Icon(Icons.account_circle_sharp,
+                                  size: 35, color: Color(0xFFb1ddf1)),
+                            ),
                             title: Center(
                                 child: Text(
-                              entries[index],
+                              entries[index].name,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             )),
-                            subtitle: Center(child: Text(positions[index])),
-                            trailing: Text('${streaks[index]}  days'),
+                            subtitle:
+                                Center(child: Text(entries[index].position)),
+                            trailing: SizedBox(
+                              width: 100,
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    Container(padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),child: Text('${entries[index].streakCount}'),),
+                                    if(fiveStreak(entries[index].streakCount))  const Icon(Icons.local_fire_department, size: 25, color: Colors.red,)
+                                  ],
+                                ),
+                              ),
+                            )
                           ),
                         ],
                       ))));
