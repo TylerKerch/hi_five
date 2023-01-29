@@ -6,11 +6,11 @@ import 'package:uuid/uuid.dart';
 class ImageUpload {
   static var uuid = const Uuid();
 
-  static Future<void> createPost(Emp emp, String url, String user2) async {
+  static Future<void> createPost(Emp emp, String url) async {
     await FirebaseFirestore.instance
         .collection('posts')
         .doc(uuid.v1())
-        .set({'image': url, 'email': emp.email, 'firstName': emp.name, 'secondName': user2});
+        .set({'image': url, 'email': emp.email, 'firstName': emp.name, 'secondName': emp.pairing});
   }
 
   static Future<List<DocumentSnapshot>> getAllPosts() async {

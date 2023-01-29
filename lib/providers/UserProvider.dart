@@ -6,13 +6,15 @@ import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/cupertino.dart';
 import 'package:hi_five/models/Emp.dart';
 
+import '../services/auth_service.dart';
+
 class UserProvider extends ChangeNotifier {
-  Emp? _user;
+  Emp? _emp;
   StreamSubscription? _subscription;
   CachedNetworkImage? _cachedProfilePic;
   Image? _profilePic;
 
-  Emp? get user => _user;
+  Emp? get emp => _emp;
   CachedNetworkImage? get pfp => _cachedProfilePic;
 
   Future<void> setUser(auth.User? currentUser) async {
@@ -22,12 +24,12 @@ class UserProvider extends ChangeNotifier {
           .doc(currentUser.uid)
           .snapshots()
           .listen((DocumentSnapshot snapshot) {
-        _user = Emp.fromSnapshot(snapshot);
+        _emp = Emp.fromSnapshot(snapshot);
         notifyListeners();
       });
     } else {
       _subscription?.cancel();
-      _user = null;
+      _emp = null;
     }
   }
 }

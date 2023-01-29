@@ -11,11 +11,6 @@ class AuthProvider extends ChangeNotifier {
   bool _loggedIn = false;
 
   bool get loggedIn => _loggedIn;
-  Emp _emp = Emp("","");
-
-  Emp get emp => _emp;
-  late String _emp2;
-  String get emp2 => _emp2;
 
   AuthProvider() {
     listenToAuth();
@@ -27,13 +22,6 @@ class AuthProvider extends ChangeNotifier {
         _loggedIn = false;
         notifyListeners();
       } else {
-        String name;
-        DocumentSnapshot doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.uid).get();
-        _emp = Emp("Sean Acaballa", user.email!);
-        List<String> users = await AuthService.getAllOtherNames(_emp.email!);
-        _emp2 = users[Random().nextInt(users.length)];
         _loggedIn = true;
         notifyListeners();
       }

@@ -64,7 +64,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    emp2 = Provider.of<AuthProvider>(context, listen: false).emp2;
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
         ? 250.0
@@ -186,7 +185,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-              child: Text("Up high or down low? Go give ${emp2} a high five!",
+              child: Text("Up high or down low? Go give ${emp2} a hiFive!",
                   style: const TextStyle(fontSize: 20), textAlign: TextAlign.center)),
         ),
       ]),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:hi_five/models/Emp.dart';
@@ -65,7 +67,7 @@ class AuthService {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(auth.FirebaseAuth.instance.currentUser!.uid)
-        .set({'name': emp.name, 'email': emp.email, 'postedToday': false});
+        .set({'name': emp.name, 'email': emp.email, 'postedToday': false, 'pairing': emp.pairing});
   }
 
   static Future<void> signOut() async {

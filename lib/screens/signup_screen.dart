@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,9 @@ import 'package:hi_five/services/auth_service.dart';
 import 'package:hi_five/services/signup_validators.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+
+import '../providers/AuthProvider.dart';
 
 
 class SignUpScreen extends StatefulWidget {
@@ -41,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     double width = MediaQuery.of(context).size.width;
 
     ImageProvider image = const AssetImage('assets/Picolas.png');
-
+    UserProvider userProvider = Provider.of<UserProvider>(context);
     if (_profilePic != null) {
       image = FileImage(_profilePic!);
     }
@@ -209,21 +213,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 _emailInputController.text.trim());
 
                             bool valid = false;
-
                             if (snackbarError == null) {
                               valid = await AuthService().signUpWithEmail(
                                   _nameInputController.text.trim(),
                                   _emailInputController.text.trim(),
                                   _passwordInputController.text.trim());
                             }
+
                             if (valid && snackbarError == null) {
+                              List<String> users = await AuthService.getAllOtherNames(auth.FirebaseAuth.instance.currentUser!.uid);
 
-                              Emp emp = Emp(
-                                  _nameInputController.text.trim(),
-                                  _emailInputController.text.trim(),
-                              );
-
-                              await AuthService.createUser(emp);
+                              AuthService.createUser(Emp(_nameInputController.text.trim(), _emailInputController.text.trim(), users[Random().nextInt(users.length)]));
+                              userProvider.setUser(auth.FirebaseAuth.instance.currentUser!);
                               Navigator.pop(context);
                             } else {
                               setState(() {

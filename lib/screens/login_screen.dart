@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hi_five/screens/signup_screen.dart';
 import 'package:hi_five/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:provider/provider.dart';
+
+import '../providers/UserProvider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -24,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    UserProvider userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -157,11 +162,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            print(_emailInputController.text);
-                            print(_passwordInputController.text);
                             AuthService().signInWithEmail(
                                 _emailInputController.text,
                                 _passwordInputController.text);
+                            userProvider.setUser(auth.FirebaseAuth.instance.currentUser!);
                           },
                           child: Container(
                             height: height * 0.06,

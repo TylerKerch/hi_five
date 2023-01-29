@@ -10,6 +10,7 @@ import 'package:image/image.dart' as img;
 import 'package:provider/provider.dart';
 
 import '../providers/AuthProvider.dart';
+import '../providers/UserProvider.dart';
 import '../services/auth_service.dart';
 import '../services/image_upload.dart';
 
@@ -46,7 +47,7 @@ class DisplayPicturesScreenState extends State<DisplayPicturesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context, listen: false);
+    UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return Scaffold(
         appBar: PreferredSize(
@@ -89,7 +90,7 @@ class DisplayPicturesScreenState extends State<DisplayPicturesScreen> {
                     var downloadUrl = await snapshot.ref.getDownloadURL();
                     print(path);
                     print(downloadUrl);
-                    ImageUpload.createPost(authProvider.emp, downloadUrl, authProvider.emp2);
+                    ImageUpload.createPost(userProvider.emp!, downloadUrl);
                     AuthService.setPostedToday(auth.FirebaseAuth.instance.currentUser!.uid);
                 }
                 if(mounted){
