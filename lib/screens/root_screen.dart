@@ -74,7 +74,9 @@ class _RootScreenState extends State<RootScreen> {
             setState(() {
               _index = index;
               if(index!=1){
-                globals.qrController?.pauseCamera();
+                if(globals.qrController != null){
+                  globals.qrController!.pauseCamera();
+                }
               }
               _pageController.animateToPage(_index,
                   duration: const Duration(milliseconds: 200),

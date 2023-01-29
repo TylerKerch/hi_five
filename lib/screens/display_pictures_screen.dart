@@ -4,11 +4,13 @@ import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:image/image.dart' as img;
 import 'package:provider/provider.dart';
 
 import '../providers/AuthProvider.dart';
+import '../services/auth_service.dart';
 import '../services/image_upload.dart';
 
 class DisplayPicturesScreen extends StatefulWidget {
@@ -57,7 +59,7 @@ class DisplayPicturesScreenState extends State<DisplayPicturesScreen> {
                   style: TextStyle(color: Colors.black, fontSize: 50)),
               backgroundColor: Colors.white,
               leading: Padding(padding: EdgeInsets.only(left:10),
-              child: Image.asset("images/logo.png",)),
+              child: Image.asset("assets/images/hifive_logo.png",)),
               elevation: 0),
         ),
 
@@ -88,6 +90,7 @@ class DisplayPicturesScreenState extends State<DisplayPicturesScreen> {
                     print(path);
                     print(downloadUrl);
                     ImageUpload.createPost(authProvider.emp, downloadUrl, authProvider.emp2);
+                    AuthService.setPostedToday(auth.FirebaseAuth.instance.currentUser!.uid);
                 }
                 if(mounted){
                     Navigator.of(context).pop();

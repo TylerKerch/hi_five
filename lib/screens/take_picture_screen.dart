@@ -52,10 +52,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void reassemble() {
     super.reassemble();
+    if(globals.qrController == null) {
+      return;
+    }
     if (Platform.isAndroid) {
-      globals.qrController.pauseCamera();
+      globals.qrController!.pauseCamera();
     } else if (Platform.isIOS) {
-      globals.qrController.resumeCamera();
+      globals.qrController!.resumeCamera();
     }
   }
 
@@ -69,7 +72,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     if (result != null &&
         result!.code == "https://www.youtube.com/watch?v=dQw4w9WgXcQ"){
       Future.delayed(const Duration(milliseconds: 500), (){
-        globals.qrController?.stopCamera();
+        if(globals.qrController != null){
+          globals.qrController!.stopCamera();
+        }
         if(mounted){
           setState(() {scanned=true;});
         }
@@ -162,7 +167,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             leading: Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Image.asset(
-                  "images/logo.png",
+                  "assets/images/hifive_logo.png",
                 )),
             elevation: 0),
       ),

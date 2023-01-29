@@ -28,11 +28,10 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         String name;
-        var doc = await FirebaseFirestore.instance
+        DocumentSnapshot doc = await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid).get();
-        name = doc.data()!['name'];
-        _emp = Emp(name, user.email!);
+        _emp = Emp("Sean Acaballa", user.email!);
         List<String> users = await AuthService.getAllOtherNames(_emp.email!);
         _emp2 = users[Random().nextInt(users.length)];
         _loggedIn = true;

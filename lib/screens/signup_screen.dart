@@ -220,7 +220,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                               Emp emp = Emp(
                                   _nameInputController.text.trim(),
-                                  _emailInputController.text.trim());
+                                  _emailInputController.text.trim(),
+                              );
 
                               await AuthService.createUser(emp);
                               Navigator.pop(context);

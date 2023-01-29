@@ -35,6 +35,17 @@ class AuthService {
     return names;
   }
 
+  static Future<bool> postedToday(String id) async {
+    DocumentSnapshot snapshot =
+    await FirebaseFirestore.instance.collection('users').doc(id).get();
+    print(snapshot['postedToday']);
+    return snapshot['postedToday'];
+  }
+
+  static Future<void> setPostedToday(String id) async {
+    await FirebaseFirestore.instance.collection('users').doc(id).set({'postedToday': true}, SetOptions(merge: true));
+  }
+
   Future<bool> signUpWithEmail(
       String name, String email, String password) async {
     try {
@@ -54,7 +65,7 @@ class AuthService {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(auth.FirebaseAuth.instance.currentUser!.uid)
-        .set(emp.toJson());
+        .set({'name': emp.name, 'email': emp.email, 'postedToday': false});
   }
 
   static Future<void> signOut() async {
