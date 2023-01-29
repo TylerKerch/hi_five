@@ -44,7 +44,7 @@ class GroupScreenState extends State<GroupScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF9ed4ff),
         title: const Center(
-          child: Text('hiFive'),
+          child: Text('Group'),
         ),
       ),
       body: ListView.separated(
